@@ -4,10 +4,7 @@ import { Provider } from 'react-redux';
 import { HashRouter, Route } from 'react-router-dom';
 import { ThemeProvider } from "@material-ui/styles";
 // import { store } from './store';
-import {
-	HeaderAppBar,
-	StickyFooter,
-} from './components';
+import {DialogTitle} from './modules/NeonText'
 import { createMuiTheme } from '@material-ui/core/styles';
 
 
@@ -49,19 +46,7 @@ ReactDOM.render(
 	<div>
 		{/*<Provider store={store}>*/}
 			<ThemeProvider theme={theme}>
-				<HashRouter>
-					<HeaderAppBar/>
-					{/*<div>*/}
-					{/*	<Route path="/task" exact component={TaskPage} />*/}
-					{/*</div>*/}
-					{/*<div>*/}
-					{/*	<Route path="/secrets" exact component={SecretPage} />*/}
-					{/*</div>*/}
-					{/*<div>*/}
-					{/*	<Route path="/setting" exact component={SettingPage} />*/}
-					{/*</div>*/}
-					<StickyFooter />
-				</HashRouter>
+				<DialogTitle text={"hello world"}/>
 			</ThemeProvider>
 		{/*</Provider>*/}
 	</div>,
