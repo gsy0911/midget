@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { HashRouter, Route } from 'react-router-dom';
 import { ThemeProvider } from "@material-ui/styles";
 // import { store } from './store';
-import {DialogTitle} from './modules/NeonText'
+import {NeonText1} from './modules'
 import { createMuiTheme } from '@material-ui/core/styles';
 
 
@@ -46,7 +46,7 @@ ReactDOM.render(
 	<div>
 		{/*<Provider store={store}>*/}
 			<ThemeProvider theme={theme}>
-				<DialogTitle text={"hello world"}/>
+				<NeonText1 text={"hello world"}/>
 			</ThemeProvider>
 		{/*</Provider>*/}
 	</div>,

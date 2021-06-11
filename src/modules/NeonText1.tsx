@@ -38,7 +38,7 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
 	text: string
 }
 
-export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
+export const NeonText1 = withStyles(styles)((props: DialogTitleProps) => {
 	const {text, classes, ...other} = props;
 	return (
 		<h1 className={classes.neonText}>
