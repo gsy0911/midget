@@ -8,6 +8,7 @@ const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 1200,
 		height: 600,
+		transparent: true,
 		webPreferences: {
 			// not to use `Node.js` in `renderer process`
 			nodeIntegration: false,

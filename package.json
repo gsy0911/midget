@@ -1,7 +1,7 @@
 {
-	"name": "template_type_script",
+	"name": "ne10",
 	"version": "0.1.0",
-	"description": "template repository for TypeScript",
+	"description": "something neon",
 	"main": "dist/main.js",
 	"scripts": {
 		"dev": "ts-node src/index.ts",
@@ -10,19 +10,21 @@
 		"tsc": "tsc",
 		"webpack": "webpack",
 		"build": "npm-run-all clean tsc webpack",
-		"start": "electron ./dist/main.js --debug"
+		"start": "electron ./dist/main.js --debug",
+		"as:mac": "electron-builder --mac --x64",
+		"package:mac": "npm-run-all build as:mac"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/gsy0911/midget.git"
+		"url": "git+https://github.com/gsy0911/ne10.git"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/gsy0911/midget/issues"
+		"url": "https://github.com/gsy0911/ne10/issues"
 	},
-	"homepage": "https://github.com/gsy0911/midget#readme",
+	"homepage": "https://github.com/gsy0911/ne10#readme",
 	"devDependencies": {
 		"@types/node": "^15.12.2",
 		"@types/react": "^17.0.11",
