@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {createStyles, Theme, withStyles, WithStyles} from '@material-ui/core/styles';
-import {Transition} from '@headlessui/react'
+import {Listbox, Transition} from '@headlessui/react'
+
+const people = [
+	{id: 1, name: 'Durward Reynolds', unavailable: false},
+	{id: 2, name: 'Kenton Towne', unavailable: false},
+	{id: 3, name: 'Therese Wunsch', unavailable: false},
+	{id: 4, name: 'Benedict Kessler', unavailable: true},
+	{id: 5, name: 'Katelyn Rohan', unavailable: false},
+]
 
 const textColor = "#f40"
 const borderColor = "#08f"
@@ -10,12 +18,13 @@ const styles = (theme: Theme) => createStyles({
 		color: "#fff",
 		textShadow: "0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #bc13fe, 0 0 82px #bc13fe, 0 0 92px #bc13fe, 0 0 102px #bc13fe, 0 0 151px #bc13fe",
 		animation: "$flicker 1.5s infinite alternate",
-		fontSize: "6.2rem",
+		fontSize: "1.5rem",
 		border: "0.2rem solid #fff",
 		borderRadius: "2rem",
 		padding: "0.4em",
 		fontFamily: "sans-serif",
-		boxShadow: "0 0 .2rem #fff, 0 0 .2rem #fff, 0 0 2rem #bc13fe, 0 0 0.8rem #bc13fe, 0 0 2.8rem #bc13fe, inset 0 0 1.3rem #bc13fe"
+		boxShadow: "0 0 .2rem #fff, 0 0 .2rem #fff, 0 0 2rem #bc13fe, 0 0 0.8rem #bc13fe, 0 0 2.8rem #bc13fe, inset 0 0 1.3rem #bc13fe",
+		background: "none"
 	},
 	"@keyframes flicker": {
 		"0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%": {
@@ -31,25 +40,27 @@ const styles = (theme: Theme) => createStyles({
 
 
 interface DialogTitleProps extends WithStyles<typeof styles> {
-	text: string
+	text?: string
 }
 
-export const NeonText2 = withStyles(styles)((props: DialogTitleProps) => {
+export const NeonListBox = withStyles(styles)((props: DialogTitleProps) => {
+	const [selectedPerson, setSelectedPerson] = useState(people[0])
 	const {text, classes, ...other} = props;
 	return (
-
-		<Transition
-			show={true}
-			enter="transition-opacity duration-75"
-			enterFrom="opacity-0"
-			enterTo="opacity-100"
-			leave="transition-opacity duration-150"
-			leaveFrom="opacity-100"
-			leaveTo="opacity-0"
-		>
-			<h1 className={classes.neonText}>
-				{text}
-			</h1>
-		</Transition>
+		<Listbox value={selectedPerson} onChange={setSelectedPerson}>
+			<Listbox.Button className={classes.neonText}>{selectedPerson.name}</Listbox.Button>
+			<Listbox.Options>
+				{people.map((person) => (
+					<Listbox.Option
+						key={person.id}
+						value={person}
+						disabled={person.unavailable}
+						className={classes.neonText}
+					>
+						{person.name}
+					</Listbox.Option>
+				))}
+			</Listbox.Options>
+		</Listbox>
 	);
 });

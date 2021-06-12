@@ -50,8 +50,8 @@ app.on("ready", function () {
 	});
 
 	const notification = new Notification({
-		title: "migot",
-		body: "Hello !",
+		title: "ne10",
+		body: "neon !",
 	});
 	notification.show();
 
