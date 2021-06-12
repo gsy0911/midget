@@ -2,7 +2,7 @@ import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 interface IProps {
-  shown: boolean;
+	shown: boolean;
 }
 
 export const Loading: React.FC<IProps> = props => {
@@ -12,4 +12,4 @@ export const Loading: React.FC<IProps> = props => {
 	return (
 		<LinearProgress color="secondary"/>
 	);
-	};
+};
