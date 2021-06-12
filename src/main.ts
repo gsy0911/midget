@@ -1,8 +1,16 @@
-import { app, BrowserWindow, globalShortcut, Notification } from "electron";
-import { TrayMenu } from "./TrayMenu";
+import {app, BrowserWindow, globalShortcut, Notification} from "electron";
+import {TrayMenu} from "./TrayMenu";
 import path from "path";
 
 let tray = null;
+
+// macOS
+const isMacOs = process.platform === 'darwin'
+if (isMacOs) {
+	// Dockを非表示にする
+	app.dock.hide()
+}
+
 
 const createWindow = () => {
 	const win = new BrowserWindow({
@@ -20,6 +28,8 @@ const createWindow = () => {
 		frame: false,
 		alwaysOnTop: true,
 	});
+	win.setAlwaysOnTop(true, "screen-saver")
+	win.setVisibleOnAllWorkspaces(true)
 
 	void win.loadFile(path.join(__dirname, "./index.html"));
 	if (process.argv.find((arg) => arg === "--debug")) {
@@ -65,7 +75,7 @@ app.on("will-quit", () => {
 
 function showWindow() {
 	// detect blur event of BrowserWindow
-	app.focus({ steal: true });
+	app.focus({steal: true});
 	app.show();
 }
 
