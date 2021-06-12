@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {HashRouter, Route} from 'react-router-dom';
 import {ThemeProvider} from "@material-ui/styles";
 // import { store } from './store';
-import {NeonText1, NeonText2, NeonListBox} from './modules'
+import {NeonText, NeonText1, NeonText2, NeonListBox} from './modules'
 import {createMuiTheme} from '@material-ui/core/styles';
 
 
@@ -46,9 +46,10 @@ ReactDOM.render(
 	<div>
 		{/*<Provider store={store}>*/}
 		<ThemeProvider theme={theme}>
-			{/*<NeonText1 text={"hello world"}/>*/}
-			{/*<NeonText2 text={"hello world"}/>*/}
-			<NeonListBox />
+			<NeonText text={"hello world"}/>
+			<NeonText text={"hello world"} animation={"pulsate"}/>
+			<NeonText text={"hello world"} animation={"flicker"}/>
+			{/*<NeonListBox/>*/}
 		</ThemeProvider>
 		{/*</Provider>*/}
 	</div>,

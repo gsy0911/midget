@@ -5,6 +5,7 @@ interface makeStylesProps {
 	fontSize: "0.7rem" | "1.0rem" | "1.5rem"
 	fontFamily: "sans-serif" | "Gruppo" | "Bad Script" | string
 	animation: "pulsate" | "flicker"
+	margin: string
 }
 
 const textColor = "#f40"
@@ -13,14 +14,19 @@ const borderColor = "#08f"
 const useNeonStyles = (props: makeStylesProps) => {
 
 	const useStyles = makeStyles((theme: Theme) => ({
-		neonText: {
+		neonDiv: {
+			margin: props.margin,
+		},
+		neonSpan: {
 			color: "#fff",
 			textShadow: "0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #bc13fe, 0 0 82px #bc13fe, 0 0 92px #bc13fe, 0 0 102px #bc13fe, 0 0 151px #bc13fe",
 			animation: `$${props.animation} 1.5s infinite alternate`,
 			fontSize: props.fontSize,
 			border: "0.2rem solid #fff",
 			borderRadius: "2rem",
-			padding: "1.0em",
+			padding: "0.5em",
+			// display: "inline-block",
+			// width: "auto",
 			fontFamily: `"${props.fontFamily}", sans-serif`,
 			boxShadow: "0 0 .2rem #fff, 0 0 .2rem #fff, 0 0 2rem #bc13fe, 0 0 0.8rem #bc13fe, 0 0 2.8rem #bc13fe, inset 0 0 1.3rem #bc13fe",
 		},
@@ -52,6 +58,7 @@ export interface NeonTextProps {
 	fontSize?: "small" | "medium" | "large"
 	fontFamily?: "sans-serif" | "Gruppo" | "Bad Script" | string
 	animation?: "pulsate" | "flicker"
+	margin?: | string
 }
 
 const convertFontSize = (fontSize: string | undefined) => {
@@ -70,12 +77,16 @@ export const NeonText: React.FC<NeonTextProps> = (props) => {
 	const styleProps: makeStylesProps = {
 		fontSize: convertFontSize(props.fontSize),
 		fontFamily: props.fontFamily || "sans-serif",
-		animation: props.animation || "flicker"
+		animation: props.animation || "flicker",
+		margin: props.margin || "3.0em"
 	}
 	const classes = useNeonStyles(styleProps)
 	return (
-		<h1 className={classes.neonText}>
-			{props.text}
-		</h1>
+		<div className={classes.neonDiv}>
+			<span className={classes.neonSpan}>
+				{props.text}
+			</span>
+
+		</div>
 	)
 }
