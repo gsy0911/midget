@@ -1,0 +1,8 @@
+version: '2'
+services:
+  ne10:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./products:/usr/app/products
