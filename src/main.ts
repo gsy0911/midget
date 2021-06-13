@@ -1,13 +1,22 @@
-import { app, BrowserWindow, globalShortcut, Notification } from "electron";
-import { TrayMenu } from "./TrayMenu";
+import {app, BrowserWindow, globalShortcut, Notification} from "electron";
+import {TrayMenu} from "./TrayMenu";
 import path from "path";
 
 let tray = null;
 
+// macOS
+const isMacOs = process.platform === 'darwin'
+if (isMacOs) {
+	// Dockを非表示にする
+	app.dock.hide()
+}
+
+
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 1200,
-		height: 600,
+		width: 300,
+		height: 300,
+		transparent: true,
 		webPreferences: {
 			// not to use `Node.js` in `renderer process`
 			nodeIntegration: false,
@@ -19,11 +28,14 @@ const createWindow = () => {
 		frame: false,
 		alwaysOnTop: true,
 	});
+	win.setAlwaysOnTop(true, "screen-saver")
+	win.setVisibleOnAllWorkspaces(true)
 
 	void win.loadFile(path.join(__dirname, "./index.html"));
 	if (process.argv.find((arg) => arg === "--debug")) {
 		win.webContents.openDevTools();
 	}
+	tray = new TrayMenu(win);
 };
 
 void app.whenReady().then(createWindow);
@@ -49,12 +61,10 @@ app.on("ready", function () {
 	});
 
 	const notification = new Notification({
-		title: "migot",
-		body: "Hello !",
+		title: "ne10",
+		body: "neon !",
 	});
 	notification.show();
-
-	tray = new TrayMenu();
 });
 
 app.on("will-quit", () => {
@@ -64,7 +74,7 @@ app.on("will-quit", () => {
 
 function showWindow() {
 	// detect blur event of BrowserWindow
-	app.focus({ steal: true });
+	app.focus({steal: true});
 	app.show();
 }
 
