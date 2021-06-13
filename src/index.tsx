@@ -49,9 +49,7 @@ ReactDOM.render(
 	<div>
 		{/*<Provider store={store}>*/}
 		<ThemeProvider theme={theme}>
-			<NeonText text={"hello world"}/>
-			<NeonText text={"hello world"} animation={"pulsate"}/>
-			<Clock/>
+			<Clock animation={"pulsate"}/>
 			{/*<NeonText text={"hello world"} textColor={"#ffa500"} animation={"blink"}/>*/}
 			{/*<NeonListBox/>*/}
 		</ThemeProvider>
