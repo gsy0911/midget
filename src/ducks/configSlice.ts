@@ -14,12 +14,12 @@ export const configSlice = createSlice({
 	name: 'ne10Config',
 	initialState,
 	reducers: {
-		getConfig: (state, action) => {
+		setConfig: (state, action) => {
 			state.data = action.payload
 		},
 	}
 })
 
-export const {getConfig} = configSlice.actions
+export const {setConfig} = configSlice.actions
 export default configSlice.reducer
 

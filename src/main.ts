@@ -22,7 +22,7 @@ const createWindow = () => {
 			nodeIntegration: false,
 			nodeIntegrationInWorker: false,
 			contextIsolation: true,
-			preload: path.join(__dirname, "./core/preLoad.js"),
+			preload: path.join(app.getAppPath(), "core", "preLoad.js"),
 			webSecurity: false,
 		},
 		frame: false,
@@ -31,7 +31,7 @@ const createWindow = () => {
 	win.setAlwaysOnTop(true, "screen-saver")
 	win.setVisibleOnAllWorkspaces(true)
 
-	void win.loadFile(path.join(__dirname, "./index.html"));
+	void win.loadFile(path.join(app.getAppPath(), "index.html"));
 	if (process.argv.find((arg) => arg === "--debug")) {
 		win.webContents.openDevTools();
 	}
