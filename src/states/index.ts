@@ -1,1 +1,1 @@
-
+export {IConfig} from './IConfig';
