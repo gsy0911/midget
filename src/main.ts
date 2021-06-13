@@ -5,7 +5,6 @@ import path from "path";
 import fs from "fs-extra";
 import {IContextBridge} from "./states/IContextBridge";
 import {IConfig, defaultConfig} from './states';
-// import path from "path";
 import os from "os";
 
 let tray = null;

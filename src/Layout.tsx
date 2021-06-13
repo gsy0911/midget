@@ -4,11 +4,9 @@ import {useSelector, useDispatch} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {RootState} from './store';
 import {setConfig} from './ducks/configSlice';
-import {defaultConfig} from './states';
-// dummy data
+
 
 const theme = createMuiTheme({
 	palette: {
@@ -51,20 +49,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const Layout: React.FC = () => {
-	const config = useSelector((state: RootState) => state.config)
-	console.log(`load: ${config}`)
+	const config = useSelector((state: RootState) => state.config.data)
 
 	const dispatch = useDispatch()
 	if (config === undefined) {
-		// default
-		dispatch(setConfig(defaultConfig))
-		// load from setting file
-		window.contextBridge.loadConfig().then(data => {
-			dispatch(setConfig(data))
-			console.log(`obtained: ${data}`)
-		}).catch(err => {
-			console.log(err)
-		})
+		const data = window.contextBridge.loadConfig()
+		dispatch(setConfig(data))
 	}
 
 	const classes = useStyles()

@@ -1,7 +1,7 @@
 import {IConfig} from './IConfig';
 
 export interface IContextBridge {
-	loadConfig: () => Promise<IConfig>;
+	loadConfig: () => IConfig;
 }
 
 // add core-definition to window-object
