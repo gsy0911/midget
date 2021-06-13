@@ -1,4 +1,4 @@
-import { app, Tray, Menu, nativeImage } from "electron";
+import {app, BrowserWindow, Tray, Menu, nativeImage} from "electron";
 import path from "path";
 
 export class TrayMenu {
@@ -10,9 +10,9 @@ export class TrayMenu {
 	// Path where should we fetch our icon;
 	private iconPath = path.join(__dirname + "/assets/icon.png");
 
-	constructor() {
+	constructor(window: BrowserWindow) {
 		this.tray = new Tray(this.createNativeImage());
-		this.tray.setContextMenu(this.createContextMenu());
+		this.tray.setContextMenu(this.createContextMenu(window));
 	}
 
 	createNativeImage(): nativeImage {
@@ -25,18 +25,27 @@ export class TrayMenu {
 		return image;
 	}
 
-	createContextMenu(): Menu {
+	createContextMenu(window: BrowserWindow): Menu {
 		const contextMenu = Menu.buildFromTemplate([
 			{
-				label: "menu 1",
+				label: "work timer",
 				type: "radio",
-				click: () => console.log("clicked"),
+				// click: () => window.loadURL("/"),
 			},
-			{ label: "menu 2", type: "radio" },
-			{ type: "separator" },
 			{
-				label: "sub-menu",
-				submenu: [{ label: "sub-menu 1" }, { label: "sub-menu2" }],
+				label: "none",
+				type: "radio",
+				// click: () => window.loadURL("/unknown")
+			},
+			{type: "separator"},
+			{
+				label: "work timer",
+				submenu: [
+					{
+						label: "reset",
+						click: () => window.reload()
+					}
+				],
 			},
 			{
 				label: "Quit",

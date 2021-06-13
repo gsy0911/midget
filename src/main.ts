@@ -14,8 +14,8 @@ if (isMacOs) {
 
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 400,
-		height: 400,
+		width: 300,
+		height: 300,
 		transparent: true,
 		webPreferences: {
 			// not to use `Node.js` in `renderer process`
@@ -35,6 +35,7 @@ const createWindow = () => {
 	if (process.argv.find((arg) => arg === "--debug")) {
 		win.webContents.openDevTools();
 	}
+	tray = new TrayMenu(win);
 };
 
 void app.whenReady().then(createWindow);
@@ -64,8 +65,6 @@ app.on("ready", function () {
 		body: "neon !",
 	});
 	notification.show();
-
-	tray = new TrayMenu();
 });
 
 app.on("will-quit", () => {
