@@ -15,14 +15,14 @@ export interface TimetableProps {
 }
 
 const workMode: ModeProps = {
-	durationMinute: 10,
+	durationMinute: 55,
 	color: "cyan",
 	title: "WORK NOW",
 	next: "break"
 }
 
 const breakMode: ModeProps = {
-	durationMinute: 1,
+	durationMinute: 5,
 	color: "orange",
 	title: "REST",
 	next: "work"
@@ -90,7 +90,7 @@ export const NeonSchoolClock: React.FC<NeonSchoolClockProps> = (props) => {
 		<NeonBox
 			header={`Loop: ${loopCount}`}
 			title={mode.title}
-			subtitle={`${dateToString(date)} JST`}
+			subtitle={`${dateToString(date)} JST\n${Math.floor(count/60)}[min]`}
 			color={mode.color}
 		/>
 	)

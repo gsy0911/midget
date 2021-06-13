@@ -1,5 +1,7 @@
 import React from 'react';
 import {Theme, makeStyles} from '@material-ui/core/styles';
+import {Simulate} from "react-dom/test-utils";
+import submit = Simulate.submit;
 
 interface makeStylesProps {
 	margin: string
@@ -29,6 +31,7 @@ const useNeonStyles = (props: makeStylesProps) => {
 			padding: "1rem",
 			width: props.size,
 			margin: props.margin,
+			whiteSpace: 'pre-line'
 		},
 		header: {
 			fontWeight: 700
@@ -37,6 +40,9 @@ const useNeonStyles = (props: makeStylesProps) => {
 			fontSize: "1.5rem",
 			fontFamily: "Neon Glow, sans-serif",
 			textShadow: `0 0 ${props.blur} ${props.glow}`
+		},
+		subtitle: {
+			textAlign: "center"
 		}
 	}))
 	return useStyles(props)
@@ -99,7 +105,7 @@ export const NeonBox: React.FC<NeonBoxProps> = (props) => {
 		<div className={classes.neonDiv}>
 			<span className={classes.header}>{props.header}</span>
 			<h2 className={classes.title}>{props.title}</h2>
-			<p>{props.subtitle}</p>
+			<p className={classes.subtitle}>{props.subtitle}</p>
 		</div>
 	)
 }
