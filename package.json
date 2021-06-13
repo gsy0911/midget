@@ -1,12 +1,14 @@
 {
 	"name": "ne10",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "something neon",
 	"main": "dist/main.js",
 	"scripts": {
 		"dev": "ts-node src/index.ts",
 		"dev:watch": "ts-node-dev --respawn src/index.ts",
-		"clean": "rimraf dist/*",
+		"clean:dist": "rimraf dist/*",
+		"clean:products": "rimraf products/*",
+		"clean": "npm-run-all clean:dist clean:products",
 		"tsc": "tsc",
 		"webpack": "webpack",
 		"build": "npm-run-all clean tsc webpack",
