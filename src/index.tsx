@@ -1,16 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+// import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+// import {HashRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {HashRouter} from 'react-router-dom';
 import {ThemeProvider} from "@material-ui/styles";
-// import { store } from './store';
-import {
-	NeonText,
-	NeonClock,
-	NeonBox,
-	NeonSchoolClock
-} from './modules'
+import {store} from './store';
+import {NeonSchoolClock} from './modules'
 import {createMuiTheme} from '@material-ui/core/styles';
 
 
@@ -50,22 +45,16 @@ const container = document.getElementById('contents');
 
 ReactDOM.render(
 	<div>
-		{/*<Provider store={store}>*/}
-		<ThemeProvider theme={theme}>
-			<Router>
-				<Switch>
-					<Route path="/">
-						<NeonSchoolClock/>
-					</Route>
-				</Switch>
-			</Router>
-			{/*<NeonClock animation={"pulsate"}/>*/}
-			{/*<NeonBox header={"1"} title={"mdrskn"} subtitle={"hello, world"} size={"8rem"} color={"cyan"}/>*/}
+		<Provider store={store}>
+			<ThemeProvider theme={theme}>
+				<NeonSchoolClock/>
+				{/*<NeonClock animation={"pulsate"}/>*/}
+				{/*<NeonBox header={"1"} title={"mdrskn"} subtitle={"hello, world"} size={"8rem"} color={"cyan"}/>*/}
 
-			{/*<NeonText text={"hello world"} textColor={"#ffa500"} animation={"blink"}/>*/}
-			{/*<NeonListBox/>*/}
-		</ThemeProvider>
-		{/*</Provider>*/}
+				{/*<NeonText text={"hello world"} textColor={"#ffa500"} animation={"blink"}/>*/}
+				{/*<NeonListBox/>*/}
+			</ThemeProvider>
+		</Provider>
 	</div>,
 	container
 );
