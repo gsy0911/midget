@@ -10,9 +10,6 @@ interface makeStylesProps {
 	margin: string
 }
 
-const textColor = "#f40"
-const borderColor = "#08f"
-
 const useNeonStyles = (props: makeStylesProps) => {
 
 	const useStyles = makeStyles((theme: Theme) => ({
