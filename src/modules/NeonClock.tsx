@@ -20,7 +20,7 @@ const dateToString = (date: Date): string => {
 	}
 }
 
-export const Clock: React.FC<ClockProps> = (props) => {
+export const NeonClock: React.FC<ClockProps> = (props) => {
 	const [date, setDate] = useState(new Date())
 
 	useEffect(() => {

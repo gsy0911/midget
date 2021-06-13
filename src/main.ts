@@ -14,8 +14,8 @@ if (isMacOs) {
 
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 600,
-		height: 300,
+		width: 400,
+		height: 400,
 		transparent: true,
 		webPreferences: {
 			// not to use `Node.js` in `renderer process`
