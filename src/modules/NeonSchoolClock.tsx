@@ -1,44 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {NeonBox} from './NeonBox';
+import {TimetableProps, ModeProps, NeonSchoolClockProps, defaultTimeTable} from '../states';
 
-
-export interface ModeProps {
-	durationMinute: number
-	color: string
-	title: string
-	next: string
-}
-
-export interface TimetableProps {
-	modes: { [modeName: string]: ModeProps },
-	initial: string,
-}
-
-const workMode: ModeProps = {
-	durationMinute: 55,
-	color: "cyan",
-	title: "WORK NOW",
-	next: "break"
-}
-
-const breakMode: ModeProps = {
-	durationMinute: 5,
-	color: "orange",
-	title: "REST",
-	next: "work"
-}
-
-const defaultTimeTable: TimetableProps = {
-	modes: {
-		work: workMode,
-		break: breakMode
-	},
-	initial: "work"
-}
-
-export interface NeonSchoolClockProps {
-	timetable?: TimetableProps
-}
 
 const dateToString = (date: Date): string => {
 	const hour = date.getHours()

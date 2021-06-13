@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import {ICore} from "./ICore";
-import {IConfig} from '../states';
+import {IConfig, defaultConfig} from '../states';
 import path from "path";
 import os from "os";
 
@@ -11,7 +11,7 @@ const loadConfig = async (): Promise<IConfig> => {
 
 	if (!exist) {
 		fs.ensureFileSync(configFilePath);
-		await fs.writeJSON(configFilePath, {data: []});
+		await fs.writeJSON(configFilePath, {data: defaultConfig});
 	}
 
 	const jsonData = (await fs.readJSON(configFilePath)) as { data: IConfig };
