@@ -4,7 +4,9 @@ import {Theme, makeStyles} from '@material-ui/core/styles';
 interface makeStylesProps {
 	fontSize: "0.7rem" | "1.0rem" | "1.5rem"
 	fontFamily: "sans-serif" | "Gruppo" | "Bad Script" | string
-	animation: "pulsate" | "flicker"
+	animation: "pulsate" | "flicker" | "blink"
+	textColor: string
+	barColor: string
 	margin: string
 }
 
@@ -18,17 +20,15 @@ const useNeonStyles = (props: makeStylesProps) => {
 			margin: props.margin,
 		},
 		neonSpan: {
-			color: "#fff",
+			color: props.textColor,
+			fontFamily: `"${props.fontFamily}", sans-serif`,
 			textShadow: "0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #bc13fe, 0 0 82px #bc13fe, 0 0 92px #bc13fe, 0 0 102px #bc13fe, 0 0 151px #bc13fe",
 			animation: `$${props.animation} 1.5s infinite alternate`,
 			fontSize: props.fontSize,
 			border: "0.2rem solid #fff",
 			borderRadius: "2rem",
-			padding: "0.5em",
-			// display: "inline-block",
-			// width: "auto",
-			fontFamily: `"${props.fontFamily}", sans-serif`,
 			boxShadow: "0 0 .2rem #fff, 0 0 .2rem #fff, 0 0 2rem #bc13fe, 0 0 0.8rem #bc13fe, 0 0 2.8rem #bc13fe, inset 0 0 1.3rem #bc13fe",
+			padding: "0.5em",
 		},
 		// animation
 		"@keyframes pulsate": {
@@ -41,23 +41,36 @@ const useNeonStyles = (props: makeStylesProps) => {
 		},
 		"@keyframes flicker": {
 			"0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%": {
-				textShadow: `-0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem ${textColor}, 0 0 4rem ${textColor}, 0 0 6rem ${textColor}, 0 0 8rem ${textColor}, 0 0 10rem ${textColor}`,
-				boxShadow: `0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem ${borderColor}, inset 0 0 2rem ${borderColor}, 0 0 4rem ${borderColor}, inset 0 0 4rem ${borderColor}`
+				textShadow: `-0.2rem -0.2rem 1rem ${props.textColor}, 0.2rem 0.2rem 1rem ${props.textColor}, 0 0 2rem ${props.textColor}, 0 0 4rem ${props.textColor}, 0 0 6rem ${props.textColor}, 0 0 8rem ${props.textColor}, 0 0 10rem ${props.textColor}`,
+				boxShadow: `0 0 .5rem ${props.textColor}, inset 0 0 .5rem ${props.textColor}, 0 0 2rem ${props.barColor}, inset 0 0 2rem ${props.barColor}, 0 0 4rem ${props.barColor}, inset 0 0 4rem ${props.barColor}`
 			},
 			"20%, 24%, 55%": {
 				textShadow: "none",
 				boxShadow: "none"
 			}
 		},
+		"@keyframes blink": {
+			"20%, 24%, 55%": {
+				color: "#111",
+				textShadow: "none"
+			},
+			"0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%": {
+				color: "#fff6a9",
+				textShadow: "0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000"
+			}
+		}
 	}))
 	return useStyles(props)
 }
 
 export interface NeonTextProps {
 	text: string
+	textColor?: string
 	fontSize?: "small" | "medium" | "large"
 	fontFamily?: "sans-serif" | "Gruppo" | "Bad Script" | string
-	animation?: "pulsate" | "flicker"
+	animation?: "pulsate" | "flicker" | "blink"
+	bar?: boolean
+	barColor?: string
 	margin?: | string
 }
 
@@ -78,7 +91,11 @@ export const NeonText: React.FC<NeonTextProps> = (props) => {
 		fontSize: convertFontSize(props.fontSize),
 		fontFamily: props.fontFamily || "sans-serif",
 		animation: props.animation || "flicker",
-		margin: props.margin || "3.0em"
+		margin: props.margin || "4.0em",
+		// default color is white
+		textColor: props.textColor || "#fff",
+		// default color is cyan-like
+		barColor: props.barColor || "#08f"
 	}
 	const classes = useNeonStyles(styleProps)
 	return (
