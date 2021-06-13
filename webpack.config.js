@@ -8,8 +8,8 @@ module.exports = {
 	// 起点となるファイル
 	entry: {
 		index: './src/index.tsx',
-		main: './src/main.ts',
-		preload: './src/preload.ts'
+		// main: './src/main.ts',
+		// preload: './src/preload.ts'
 	},
 	// webpack watch したときに差分ビルドができる
 	cache: true,
