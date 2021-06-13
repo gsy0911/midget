@@ -59,7 +59,7 @@ export const Layout: React.FC = () => {
 		// default
 		dispatch(setConfig(defaultConfig))
 		// load from setting file
-		window.core.loadConfig().then(data => {
+		window.contextBridge.loadConfig().then(data => {
 			dispatch(setConfig(data))
 			console.log(`obtained: ${data}`)
 		}).catch(err => {

@@ -1,12 +1,12 @@
-import {IConfig} from '../states';
+import {IConfig} from './IConfig';
 
-export interface ICore {
+export interface IContextBridge {
 	loadConfig: () => Promise<IConfig>;
 }
 
 // add core-definition to window-object
 declare global {
 	interface Window {
-		core: ICore;
+		contextBridge: IContextBridge;
 	}
 }
