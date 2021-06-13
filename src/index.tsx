@@ -6,7 +6,9 @@ import {ThemeProvider} from "@material-ui/styles";
 // import { store } from './store';
 import {
 	NeonText,
-	Clock
+	NeonClock,
+	NeonBox,
+	NeonSchoolClock
 } from './modules'
 import {createMuiTheme} from '@material-ui/core/styles';
 
@@ -49,9 +51,9 @@ ReactDOM.render(
 	<div>
 		{/*<Provider store={store}>*/}
 		<ThemeProvider theme={theme}>
-			<NeonText text={"hello world"}/>
-			<NeonText text={"hello world"} animation={"pulsate"}/>
-			<Clock/>
+			{/*<NeonClock animation={"pulsate"}/>*/}
+			{/*<NeonBox header={"1"} title={"mdrskn"} subtitle={"hello, world"} size={"8rem"} color={"cyan"}/>*/}
+			<NeonSchoolClock />
 			{/*<NeonText text={"hello world"} textColor={"#ffa500"} animation={"blink"}/>*/}
 			{/*<NeonListBox/>*/}
 		</ThemeProvider>
