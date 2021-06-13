@@ -1,6 +1,6 @@
 # ne10
 
-[![version](https://img.shields.io/badge/version-0.1.0-orange.svg)]()
+[![version](https://img.shields.io/badge/version-0.1.1-orange.svg)]()
 
 ## environment
 
@@ -15,3 +15,8 @@ $ npm install
 $ npm run package:mac
 ```
 
+## usage
+
+- hide window: `option + shift`
+- work timer:
+	- reset count: from menu bar
