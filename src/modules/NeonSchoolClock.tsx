@@ -18,6 +18,14 @@ const dateToString = (date: Date): string => {
 	}
 }
 
+const countToMinuteSecond = (count: number): string => {
+	if (count <= 60) {
+		return `${count}[sec]`
+	} else {
+		return `${Math.floor(count / 60)}[min]`
+	}
+}
+
 export const NeonSchoolClock: React.FC = (props) => {
 	const [timetable, setTimetable] = useState<TimetableProps>(defaultTimeTable)
 	const initialMode = timetable.modes[timetable.initial]
@@ -66,7 +74,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 		<NeonBox
 			header={`Loop: ${loopCount}`}
 			title={mode.title}
-			subtitle={`${dateToString(date)} JST\n${Math.floor(count / 60)}[min]`}
+			subtitle={`${dateToString(date)} JST\n${countToMinuteSecond(count)}`}
 			color={mode.color}
 		/>
 	)
