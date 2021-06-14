@@ -30,21 +30,18 @@ const useNeonStyles = (props: makeStylesProps) => {
 			width: props.size,
 			margin: props.margin,
 			whiteSpace: 'pre-line',
-			// textStroke: "0px #000"
-			// "-webkit-text-stroke-width": "0px"
-			// remove remaining silhouettes
-			// backfaceVisibility: "hidden"
-
+			textStroke: "0.75px #000"
 		},
 		header: {
 			fontWeight: 700
 		},
 		title: {
-			fontSize: "1.5rem",
+			fontSize: "1.75rem",
 			fontFamily: "sans-serif",
 			textShadow: `0 0 ${props.blur} ${props.glow}`
 		},
 		subtitle: {
+			fontSize: "1.2rem",
 			textAlign: "center"
 		}
 	}))
