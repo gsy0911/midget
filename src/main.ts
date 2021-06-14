@@ -85,7 +85,6 @@ function showWindow() {
 
 function hideWindow(window: BrowserWindow) {
 	// window is shown in center
-	window.center();
 	app.hide();
 }
 
