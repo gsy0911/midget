@@ -1,7 +1,5 @@
 import React from 'react';
 import {Theme, makeStyles} from '@material-ui/core/styles';
-import {Simulate} from "react-dom/test-utils";
-import submit = Simulate.submit;
 
 interface makeStylesProps {
 	margin: string
@@ -25,20 +23,25 @@ const useNeonStyles = (props: makeStylesProps) => {
 			color: props.color,
 			display: "inline-flex",
 			flexDirection: "column",
-			fontFamily: "system-ui, sans-serif",
+			fontFamily: "sans-serif",
 			height: props.size,
 			justifyContent: "space-around",
 			padding: "1rem",
 			width: props.size,
 			margin: props.margin,
-			whiteSpace: 'pre-line'
+			whiteSpace: 'pre-line',
+			// textStroke: "0px #000"
+			// "-webkit-text-stroke-width": "0px"
+			// remove remaining silhouettes
+			// backfaceVisibility: "hidden"
+
 		},
 		header: {
 			fontWeight: 700
 		},
 		title: {
 			fontSize: "1.5rem",
-			fontFamily: "Neon Glow, sans-serif",
+			fontFamily: "sans-serif",
 			textShadow: `0 0 ${props.blur} ${props.glow}`
 		},
 		subtitle: {
@@ -68,13 +71,13 @@ const convertColor = (color: string): string => {
 	// }
 	if (color === "orange") {
 		return "#FDA802"
-	} else if (color === "yellow"){
+	} else if (color === "yellow") {
 		return "#FCEAAC"
-	} else if (color === "cyan"){
+	} else if (color === "cyan") {
 		return "#B7E7F7"
-	} else if (color === "purple"){
+	} else if (color === "purple") {
 		return "#E555C7"
-	} else if (color === "silver"){
+	} else if (color === "silver") {
 		return "#C4C4C6"
 	}
 	return "#FCEAAC"
@@ -86,19 +89,12 @@ export const NeonBox: React.FC<NeonBoxProps> = (props) => {
 	const size = props.size || "12rem"
 
 	const styleProps: makeStylesProps = {
-		// fontSize: convertFontSize(props.fontSize),
-		// fontFamily: props.fontFamily || "sans-serif",
-		// animation: props.animation || "flicker",
 		margin: props.margin || "2.0em",
 		color: convertColor(color),
 		size: size,
 		glow: color,
 		blur: blur,
 		boxBlur: boxBlur(blur)
-		// default color is white
-		// textColor: props.textColor || "#fff",
-		// default color is cyan-like
-		// barColor: props.barColor || "#08f"
 	}
 	const classes = useNeonStyles(styleProps)
 	return (
