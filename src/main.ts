@@ -22,6 +22,7 @@ const createWindow = () => {
 		width: 300,
 		height: 300,
 		transparent: true,
+		hasShadow: false,
 		webPreferences: {
 			// not to use `Node.js` in `renderer process`
 			nodeIntegration: false,
