@@ -1,6 +1,11 @@
-import {app, BrowserWindow, globalShortcut, Notification} from "electron";
+import {app, BrowserWindow, globalShortcut, Notification, ipcMain} from "electron";
 import {TrayMenu} from "./TrayMenu";
 import path from "path";
+
+import fs from "fs-extra";
+import {IContextBridge} from "./states/IContextBridge";
+import {IConfig, defaultConfig} from './states';
+import os from "os";
 
 let tray = null;
 
@@ -22,7 +27,7 @@ const createWindow = () => {
 			nodeIntegration: false,
 			nodeIntegrationInWorker: false,
 			contextIsolation: true,
-			preload: path.join(__dirname, "./core/preLoad.js"),
+			preload: path.join(app.getAppPath(), "preload.js"),
 			webSecurity: false,
 		},
 		frame: false,
@@ -31,7 +36,7 @@ const createWindow = () => {
 	win.setAlwaysOnTop(true, "screen-saver")
 	win.setVisibleOnAllWorkspaces(true)
 
-	void win.loadFile(path.join(__dirname, "./index.html"));
+	void win.loadFile(path.join(app.getAppPath(), "index.html"));
 	if (process.argv.find((arg) => arg === "--debug")) {
 		win.webContents.openDevTools();
 	}
@@ -83,3 +88,24 @@ function hideWindow(window: BrowserWindow) {
 	window.center();
 	app.hide();
 }
+
+// ========
+// ipcMain
+// ========
+
+const configFilePath = path.join(os.homedir(), "ne10_config.json");
+
+const loadConfig = async (): Promise<IConfig> => {
+	const exist = await fs.pathExists(configFilePath);
+	console.log(`config exists? : ${exist}`)
+
+	if (!exist) {
+		fs.ensureFileSync(configFilePath);
+		await fs.writeJSON(configFilePath, {data: defaultConfig});
+	}
+
+	const jsonData = (await fs.readJSON(configFilePath)) as { data: IConfig };
+	return jsonData.data;
+};
+
+ipcMain.handle('loadConfig', loadConfig)
