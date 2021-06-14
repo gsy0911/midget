@@ -22,6 +22,7 @@ const createWindow = () => {
 		width: 300,
 		height: 300,
 		transparent: true,
+		hasShadow: false,
 		webPreferences: {
 			// not to use `Node.js` in `renderer process`
 			nodeIntegration: false,
@@ -85,7 +86,6 @@ function showWindow() {
 
 function hideWindow(window: BrowserWindow) {
 	// window is shown in center
-	window.center();
 	app.hide();
 }
 

@@ -8,10 +8,10 @@ import {Layout} from './Layout';
 const container = document.getElementById('contents');
 
 ReactDOM.render(
-	<div>
+	<>
 		<Provider store={store}>
 			<Layout />
 		</Provider>
-	</div>,
+	</>,
 	container
 );
