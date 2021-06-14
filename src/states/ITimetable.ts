@@ -33,5 +33,5 @@ export const defaultTimeTable: TimetableProps = {
 }
 
 export interface NeonSchoolClockProps {
-	timetable?: TimetableProps
+	timetable: TimetableProps
 }

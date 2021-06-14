@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {NeonBox} from './NeonBox';
-import {TimetableProps, ModeProps, NeonSchoolClockProps, defaultTimeTable} from '../states';
+import {TimetableProps, ModeProps, NeonSchoolClockProps} from '../states';
+import {defaultTimeTable} from '../states';
 
 
 const dateToString = (date: Date): string => {
@@ -17,9 +18,9 @@ const dateToString = (date: Date): string => {
 	}
 }
 
-export const NeonSchoolClock: React.FC<NeonSchoolClockProps> = (props) => {
-	const {modes, initial} = props.timetable || defaultTimeTable
-	const initialMode = modes[initial]
+export const NeonSchoolClock: React.FC = (props) => {
+	const [timetable, setTimetable] = useState<TimetableProps>(defaultTimeTable)
+	const initialMode = timetable.modes[timetable.initial]
 	// states
 	const [date, setDate] = useState<Date>(new Date())
 	const [mode, setMode] = useState<ModeProps>(initialMode)
@@ -37,23 +38,35 @@ export const NeonSchoolClock: React.FC<NeonSchoolClockProps> = (props) => {
 	useEffect(() => {
 		setCount(count => count - 1)
 		if (count <= 0) {
-			setMode(mode => modes[mode.next])
-			if (mode.next === initial) {
+			setMode(mode => timetable.modes[mode.next])
+			if (mode.next === timetable.initial) {
 				setLoopCount(loopCount => loopCount + 1)
 			}
 		}
-	}, [date])
+	}, [date, timetable])
 
 	// check loops
 	useEffect(() => {
 		setCount(mode.durationMinute * 60)
-	}, [mode])
+	}, [mode, timetable])
+
+	// load timetable from config
+	useEffect(() => {
+		window.contextBridge.loadConfig().then(data => {
+			if (data.timetable) {
+				setTimetable(data.timetable)
+				setMode(data.timetable.modes[data.timetable.initial])
+			}
+		}).catch(err => {
+			console.log(err)
+		})
+	}, [])
 
 	return (
 		<NeonBox
 			header={`Loop: ${loopCount}`}
 			title={mode.title}
-			subtitle={`${dateToString(date)} JST\n${Math.floor(count/60)}[min]`}
+			subtitle={`${dateToString(date)} JST\n${Math.floor(count / 60)}[min]`}
 			color={mode.color}
 		/>
 	)

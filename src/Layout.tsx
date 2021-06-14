@@ -1,11 +1,9 @@
 import React from "react";
 import {NeonSchoolClock} from './modules'
-import {useSelector, useDispatch} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
-import {RootState} from './store';
-import {setConfig} from './ducks/configSlice';
+
 
 
 const theme = createMuiTheme({
@@ -49,18 +47,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const Layout: React.FC = () => {
-	const config = useSelector((state: RootState) => state.config.data)
-
-	const dispatch = useDispatch()
-	if (config === undefined) {
-		const data = window.contextBridge.loadConfig()
-		dispatch(setConfig(data))
-	}
 
 	const classes = useStyles()
 	return (
 		<ThemeProvider theme={theme}>
-			<NeonSchoolClock/>
+			<NeonSchoolClock />
 		</ThemeProvider>
 	);
 }

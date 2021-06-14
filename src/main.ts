@@ -97,7 +97,7 @@ const configFilePath = path.join(os.homedir(), "ne10_config.json");
 
 const loadConfig = async (): Promise<IConfig> => {
 	const exist = await fs.pathExists(configFilePath);
-	console.log(`exists? : ${exist}`)
+	console.log(`config exists? : ${exist}`)
 
 	if (!exist) {
 		fs.ensureFileSync(configFilePath);
@@ -105,7 +105,6 @@ const loadConfig = async (): Promise<IConfig> => {
 	}
 
 	const jsonData = (await fs.readJSON(configFilePath)) as { data: IConfig };
-	console.log(`jsonData: ${jsonData.data}`)
 	return jsonData.data;
 };
 
