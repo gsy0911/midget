@@ -24,6 +24,13 @@ const breakMode: ModeProps = {
 	next: "work"
 }
 
+export const longTimeBreakMode: ModeProps = {
+	durationMinute: 60,
+	color: "silver",
+	title: "LONG REST",
+	next: "work"
+}
+
 export const defaultTimeTable: TimetableProps = {
 	modes: {
 		work: workMode,

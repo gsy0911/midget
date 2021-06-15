@@ -27,23 +27,27 @@ export class TrayMenu {
 
 	createContextMenu(window: BrowserWindow): Menu {
 		const contextMenu = Menu.buildFromTemplate([
+			// {
+			// 	label: "work timer",
+			// 	type: "radio",
+			// 	// click: () => window.loadURL("/"),
+			// },
+			// {
+			// 	label: "none",
+			// 	type: "radio",
+			// 	// click: () => window.loadURL("/unknown")
+			// },
+			// {type: "separator"},
 			{
-				label: "work timer",
-				type: "radio",
-				// click: () => window.loadURL("/"),
+				label: "reset",
+				click: () => window.reload()
 			},
 			{
-				label: "none",
-				type: "radio",
-				// click: () => window.loadURL("/unknown")
-			},
-			{type: "separator"},
-			{
-				label: "work timer",
+				label: "break",
 				submenu: [
 					{
-						label: "reset",
-						click: () => window.reload()
+						label: "1 hour",
+						click: () => window.webContents.send("longTimeBreak", {minutes: 60})
 					}
 				],
 			},
