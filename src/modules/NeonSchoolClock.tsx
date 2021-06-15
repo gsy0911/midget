@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {NeonBox} from './NeonBox';
 import {TimetableProps, ModeProps, NeonSchoolClockProps, longTimeBreakMode} from '../states';
 import {defaultTimeTable} from '../states';
-import {Mode} from "fs";
 
 
 const dateToString = (date: Date): string => {
@@ -33,7 +32,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 	// states
 	const [date, setDate] = useState<Date>(new Date())
 	const [mode, setMode] = useState<ModeProps>(initialMode)
-	const [nextMode, setNextMode] = useState<ModeProps>(timetable.modes[initialMode.next])
+	// const [nextMode, setNextMode] = useState<ModeProps>(timetable.modes[initialMode.next])
 	const [count, setCount] = useState<number>(initialMode.durationMinute * 60)
 	const [loopCount, setLoopCount] = useState<number>(1)
 
@@ -61,7 +60,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 		setCount(mode.durationMinute * 60)
 	}, [mode, timetable])
 
-	// load timetable from config
+	// load timetable from config once
 	useEffect(() => {
 		window.contextBridge.loadConfig().then(data => {
 			if (data.timetable) {
@@ -73,10 +72,11 @@ export const NeonSchoolClock: React.FC = (props) => {
 		})
 	}, [])
 
+	// after mode changed
 	useEffect(() => {
 		window.contextBridge.onLongTimeBreak().then(data => {
-			console.log(data)
-			setNextMode(mode => mode)
+			console.log(`time to rest ${data}[min]`)
+			// setNextMode(timetable.modes[longTimeBreakMode.next])
 			setMode(longTimeBreakMode)
 		}).catch(err => {
 			console.log(err)

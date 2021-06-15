@@ -43,20 +43,14 @@ export class TrayMenu {
 				click: () => window.reload()
 			},
 			{
-				label: "1 hour break",
-				click: () => {
-					window.webContents.send("longTimeBreak", {minutes: 60})
-				}
+				label: "break",
+				submenu: [
+					{
+						label: "1 hour",
+						click: () => window.webContents.send("longTimeBreak", {minutes: 60})
+					}
+				],
 			},
-			// {
-			// 	label: "work timer",
-			// 	submenu: [
-			// 		{
-			// 			label: "reset",
-			// 			click: () => window.reload()
-			// 		}
-			// 	],
-			// },
 			{
 				label: "Quit",
 				accelerator: "Command+Q",

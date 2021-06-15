@@ -25,7 +25,7 @@ const breakMode: ModeProps = {
 }
 
 export const longTimeBreakMode: ModeProps = {
-	durationMinute: 1,
+	durationMinute: 60,
 	color: "silver",
 	title: "LONG REST",
 	next: "work"
