@@ -52,6 +52,20 @@ export class TrayMenu {
 				],
 			},
 			{
+				label: "working at",
+				submenu: [
+					{
+						label: "company A",
+						type: "radio",
+						checked: true
+					},
+					{
+						label: "company B",
+						type: "radio"
+					}
+				],
+			},
+			{
 				label: "Quit",
 				accelerator: "Command+Q",
 				click: function () {
