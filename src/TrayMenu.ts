@@ -1,4 +1,4 @@
-import {app, BrowserWindow, Tray, Menu, nativeImage} from "electron";
+import {app, BrowserWindow, Tray, Menu, nativeImage, MenuItemConstructorOptions} from "electron";
 import path from "path";
 
 export class TrayMenu {
@@ -26,6 +26,14 @@ export class TrayMenu {
 	}
 
 	createContextMenu(window: BrowserWindow): Menu {
+		const addWorkingAtMenu = (label: string, checked: boolean): MenuItemConstructorOptions => {
+			return {
+				label: label,
+				type: "radio",
+				checked: checked,
+				click: () => window.webContents.send("workingAt", {name: label})
+			}
+		}
 		const contextMenu = Menu.buildFromTemplate([
 			// {
 			// 	label: "work timer",
@@ -54,15 +62,8 @@ export class TrayMenu {
 			{
 				label: "working at",
 				submenu: [
-					{
-						label: "company A",
-						type: "radio",
-						checked: true
-					},
-					{
-						label: "company B",
-						type: "radio"
-					}
+					addWorkingAtMenu("company A", true),
+					addWorkingAtMenu("company B", false)
 				],
 			},
 			{
