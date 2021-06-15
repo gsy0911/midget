@@ -44,7 +44,9 @@ export class TrayMenu {
 			},
 			{
 				label: "1 hour break",
-				click: () => window.webContents.send("longTimeBreak", {hour: 1})
+				click: () => {
+					window.webContents.send("longTimeBreak", {minutes: 60})
+				}
 			},
 			// {
 			// 	label: "work timer",

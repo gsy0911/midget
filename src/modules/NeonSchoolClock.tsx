@@ -34,6 +34,8 @@ export const NeonSchoolClock: React.FC = (props) => {
 	const [mode, setMode] = useState<ModeProps>(initialMode)
 	const [count, setCount] = useState<number>(initialMode.durationMinute * 60)
 	const [loopCount, setLoopCount] = useState<number>(1)
+	//
+	const [stop, setStop] = useState<number>(0)
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -70,11 +72,21 @@ export const NeonSchoolClock: React.FC = (props) => {
 		})
 	}, [])
 
+	useEffect(() => {
+		window.contextBridge.onLongTimeBreak().then(data => {
+			console.log(data)
+			setStop(data)
+		}).catch(err => {
+			console.log(err)
+		})
+	}, [])
+
+
 	return (
 		<NeonBox
 			header={`Loop: ${loopCount}`}
 			title={mode.title}
-			subtitle={`${dateToString(date)} JST\n${countToMinuteSecond(count)}`}
+			subtitle={`${dateToString(date)} JST\n${countToMinuteSecond(count)}\n${stop}`}
 			color={mode.color}
 		/>
 	)
