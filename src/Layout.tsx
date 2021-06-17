@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {NeonSchoolClock} from './modules'
 import {makeStyles} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
-
+import {useDispatch} from "react-redux";
+import {setWorkingAt} from "./ducks/configSlice";
 
 
 const theme = createMuiTheme({
@@ -49,9 +50,20 @@ const useStyles = makeStyles((theme) => ({
 export const Layout: React.FC = () => {
 
 	const classes = useStyles()
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		window.contextBridge.onChangeWorkingAt().then(data => {
+			console.log(`working at ${data}`)
+			dispatch(setWorkingAt(data))
+		}).catch(err => {
+			console.log(err)
+		})
+	}, [])
+
 	return (
 		<ThemeProvider theme={theme}>
-			<NeonSchoolClock />
+			<NeonSchoolClock/>
 		</ThemeProvider>
 	);
 }

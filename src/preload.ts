@@ -1,6 +1,4 @@
 import {contextBridge, ipcRenderer} from "electron";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {RootState} from './store';
 
 
 contextBridge.exposeInMainWorld("contextBridge", {
@@ -12,10 +10,13 @@ contextBridge.exposeInMainWorld("contextBridge", {
 			})
 		})
 	},
-	onChangeWorkingAt: (): Promise<number> => {
-		return new Promise(resolve => {
+	onChangeWorkingAt: (): Promise<string> => {
+		return new Promise((resolve, reject) => {
 			ipcRenderer.on("workingAt", (_, args) => {
+				console.log(args)
+				console.log("hello")
 				resolve(args.name)
+				reject("rejected")
 			})
 		})
 	},

@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {NeonBox} from './NeonBox';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../store';
 import {TimetableProps, ModeProps, NeonSchoolClockProps, longTimeBreakMode} from '../states';
 import {defaultTimeTable} from '../states';
+import {setWorkingAt} from "../ducks/configSlice";
 
 
 const dateToString = (date: Date): string => {
@@ -27,6 +30,9 @@ const countToMinuteSecond = (count: number): string => {
 }
 
 export const NeonSchoolClock: React.FC = (props) => {
+	// status from redux
+	const {workingAt} = useSelector((state: RootState) => state.config.data)
+
 	const [timetable, setTimetable] = useState<TimetableProps>(defaultTimeTable)
 	const initialMode = timetable.modes[timetable.initial]
 	// states
@@ -36,7 +42,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 	const [count, setCount] = useState<number>(initialMode.durationMinute * 60)
 	const [loopCount, setLoopCount] = useState<number>(1)
 	// working at
-	const [workingAt, setWorkingAt] = useState<string>("none")
+	// const [workingAt, setWorkingAt] = useState<string>("none")
 
 	// ticks 1[sec]
 	useEffect(() => {
@@ -80,15 +86,6 @@ export const NeonSchoolClock: React.FC = (props) => {
 			console.log(`time to rest ${data}[min]`)
 			// setNextMode(timetable.modes[longTimeBreakMode.next])
 			setMode(longTimeBreakMode)
-		}).catch(err => {
-			console.log(err)
-		})
-	}, [])
-
-	useEffect(() => {
-		window.contextBridge.onChangeWorkingAt().then(data => {
-			console.log(`working at ${data}`)
-			setWorkingAt(data)
 		}).catch(err => {
 			console.log(err)
 		})
