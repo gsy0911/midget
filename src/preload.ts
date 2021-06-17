@@ -1,4 +1,7 @@
 import {contextBridge, ipcRenderer} from "electron";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {RootState} from './store';
+
 
 contextBridge.exposeInMainWorld("contextBridge", {
 	loadConfig: () => ipcRenderer.invoke('loadConfig'),
