@@ -45,11 +45,11 @@ export class TrayMenu {
 			// 	type: "radio",
 			// 	// click: () => window.loadURL("/unknown")
 			// },
-			// {type: "separator"},
 			{
 				label: "reset",
 				click: () => window.reload()
 			},
+			{type: "separator"},
 			{
 				label: "break",
 				submenu: [

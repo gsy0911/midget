@@ -35,6 +35,8 @@ export const NeonSchoolClock: React.FC = (props) => {
 	// const [nextMode, setNextMode] = useState<ModeProps>(timetable.modes[initialMode.next])
 	const [count, setCount] = useState<number>(initialMode.durationMinute * 60)
 	const [loopCount, setLoopCount] = useState<number>(1)
+	// working at
+	const [workingAt, setWorkingAt] = useState<string>("none")
 
 	// ticks 1[sec]
 	useEffect(() => {
@@ -83,10 +85,19 @@ export const NeonSchoolClock: React.FC = (props) => {
 		})
 	}, [])
 
+	useEffect(() => {
+		window.contextBridge.onChangeWorkingAt().then(data => {
+			console.log(`working at ${data}`)
+			setWorkingAt(data)
+		}).catch(err => {
+			console.log(err)
+		})
+	}, [])
+
 
 	return (
 		<NeonBox
-			header={`Loop: ${loopCount}`}
+			header={`Loop: ${loopCount}@${workingAt}`}
 			title={mode.title}
 			subtitle={`${dateToString(date)} JST\n${countToMinuteSecond(count)}`}
 			color={mode.color}

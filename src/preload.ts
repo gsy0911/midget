@@ -9,4 +9,11 @@ contextBridge.exposeInMainWorld("contextBridge", {
 			})
 		})
 	},
+	onChangeWorkingAt: (): Promise<number> => {
+		return new Promise(resolve => {
+			ipcRenderer.on("workingAt", (_, args) => {
+				resolve(args.name)
+			})
+		})
+	},
 });
