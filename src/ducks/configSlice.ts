@@ -1,25 +1,20 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {IConfig} from '../states';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {IApplicationState, defaultApplicationState} from '../states';
 
-
-interface IConfigStore {
-	data: IConfig | undefined
-}
-
-const initialState: IConfigStore = {
-	data: undefined,
+const initialState: {data: IApplicationState} = {
+	data: defaultApplicationState,
 }
 
 export const configSlice = createSlice({
 	name: 'ne10Config',
 	initialState,
 	reducers: {
-		setConfig: (state, action) => {
-			state.data = action.payload
+		setWorkingAt: (state, action: PayloadAction<string>) => {
+			state.data.workingAt = action.payload
 		},
 	}
 })
 
-export const {setConfig} = configSlice.actions
+export const {setWorkingAt} = configSlice.actions
 export default configSlice.reducer
 

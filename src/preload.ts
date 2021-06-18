@@ -1,5 +1,6 @@
 import {contextBridge, ipcRenderer} from "electron";
 
+
 contextBridge.exposeInMainWorld("contextBridge", {
 	loadConfig: () => ipcRenderer.invoke('loadConfig'),
 	onLongTimeBreak: (): Promise<number> => {
@@ -9,4 +10,12 @@ contextBridge.exposeInMainWorld("contextBridge", {
 			})
 		})
 	},
+	onChangeWorkingAt: (): Promise<string> => {
+		return new Promise((resolve, reject) => {
+			ipcRenderer.on("workingAt", (_, args) => {
+				resolve(args.name)
+				reject("rejected")
+			})
+		})
+	}
 });

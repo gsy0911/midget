@@ -3,8 +3,7 @@ import {TrayMenu} from "./TrayMenu";
 import path from "path";
 
 import fs from "fs-extra";
-import {IContextBridge} from "./states/IContextBridge";
-import {IConfig, defaultConfig} from './states';
+import {IConfigFile, defaultConfigFile} from './states';
 import os from "os";
 
 let tray = null;
@@ -41,7 +40,11 @@ const createWindow = () => {
 	if (process.argv.find((arg) => arg === "--debug")) {
 		win.webContents.openDevTools();
 	}
-	tray = new TrayMenu(win);
+	loadConfig().then(data => {
+		const {workingAt} = data
+		console.log(workingAt)
+		tray = new TrayMenu(win, workingAt);
+	})
 };
 
 void app.whenReady().then(createWindow);
@@ -95,16 +98,16 @@ function hideWindow(window: BrowserWindow) {
 
 const configFilePath = path.join(os.homedir(), "ne10_config.json");
 
-const loadConfig = async (): Promise<IConfig> => {
+const loadConfig = async (): Promise<IConfigFile> => {
 	const exist = await fs.pathExists(configFilePath);
 	console.log(`config exists? : ${exist}`)
 
 	if (!exist) {
 		fs.ensureFileSync(configFilePath);
-		await fs.writeJSON(configFilePath, {data: defaultConfig});
+		await fs.writeJSON(configFilePath, {data: defaultConfigFile});
 	}
 
-	const jsonData = (await fs.readJSON(configFilePath)) as { data: IConfig };
+	const jsonData = (await fs.readJSON(configFilePath)) as { data: IConfigFile };
 	return jsonData.data;
 };
 
