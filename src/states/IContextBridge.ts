@@ -1,8 +1,8 @@
 import {IConfigFile} from './IConfig';
 
 export interface IContextBridge {
-	loadConfig: () => Promise<IConfigFile>;
-	onLongTimeBreak: () => Promise<number>;
+	loadConfig: () => Promise<IConfigFile>
+	onLongTimeBreak: () => Promise<number>
 	onChangeWorkingAt: () => Promise<string>
 }
 

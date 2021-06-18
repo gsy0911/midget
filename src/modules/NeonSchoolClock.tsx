@@ -43,6 +43,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 	const [loopCount, setLoopCount] = useState<number>(1)
 	// working at
 	// const [workingAt, setWorkingAt] = useState<string>("none")
+	const dispatch = useDispatch()
 
 	// ticks 1[sec]
 	useEffect(() => {
@@ -91,6 +92,15 @@ export const NeonSchoolClock: React.FC = (props) => {
 		})
 	}, [])
 
+	useEffect(() => {
+
+		window.contextBridge.onChangeWorkingAt().then(data => {
+			console.log(`working at ${data}`)
+			dispatch(setWorkingAt(data))
+		}).catch(err => {
+			console.log(err)
+		})
+	}, [workingAt])
 
 	return (
 		<NeonBox

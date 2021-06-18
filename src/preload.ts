@@ -13,11 +13,9 @@ contextBridge.exposeInMainWorld("contextBridge", {
 	onChangeWorkingAt: (): Promise<string> => {
 		return new Promise((resolve, reject) => {
 			ipcRenderer.on("workingAt", (_, args) => {
-				console.log(args)
-				console.log("hello")
 				resolve(args.name)
 				reject("rejected")
 			})
 		})
-	},
+	}
 });
