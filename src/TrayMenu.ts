@@ -10,9 +10,9 @@ export class TrayMenu {
 	// Path where should we fetch our icon;
 	private iconPath = path.join(__dirname + "/assets/icon.png");
 
-	constructor(window: BrowserWindow) {
+	constructor(window: BrowserWindow, workingAt: string[]) {
 		this.tray = new Tray(this.createNativeImage());
-		this.tray.setContextMenu(this.createContextMenu(window));
+		this.tray.setContextMenu(this.createContextMenu(window, workingAt));
 	}
 
 	createNativeImage(): nativeImage {
@@ -25,7 +25,7 @@ export class TrayMenu {
 		return image;
 	}
 
-	createContextMenu(window: BrowserWindow): Menu {
+	createContextMenu(window: BrowserWindow, workingAt: string[]): Menu {
 		const addWorkingAtMenu = (label: string, checked: boolean): MenuItemConstructorOptions => {
 			return {
 				label: label,
@@ -34,6 +34,13 @@ export class TrayMenu {
 				click: () => window.webContents.send("workingAt", {name: label})
 			}
 		}
+		const workingAtSubmenu = workingAt.map((value, index) => {
+			if (index === 0) {
+				return addWorkingAtMenu(value, true)
+			} else {
+				return addWorkingAtMenu(value, false)
+			}
+		})
 		const contextMenu = Menu.buildFromTemplate([
 			// {
 			// 	label: "work timer",
@@ -61,10 +68,7 @@ export class TrayMenu {
 			},
 			{
 				label: "working at",
-				submenu: [
-					addWorkingAtMenu("company A", true),
-					addWorkingAtMenu("company B", false)
-				],
+				submenu: workingAtSubmenu,
 			},
 			{
 				label: "Quit",

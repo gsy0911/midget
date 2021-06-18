@@ -3,7 +3,6 @@ import {TrayMenu} from "./TrayMenu";
 import path from "path";
 
 import fs from "fs-extra";
-import {IContextBridge} from "./states/IContextBridge";
 import {IConfigFile, defaultConfigFile} from './states';
 import os from "os";
 
@@ -41,7 +40,11 @@ const createWindow = () => {
 	if (process.argv.find((arg) => arg === "--debug")) {
 		win.webContents.openDevTools();
 	}
-	tray = new TrayMenu(win);
+	loadConfig().then(data => {
+		const {workingAt} = data
+		console.log(workingAt)
+		tray = new TrayMenu(win, workingAt);
+	})
 };
 
 void app.whenReady().then(createWindow);
