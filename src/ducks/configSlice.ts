@@ -12,9 +12,12 @@ export const configSlice = createSlice({
 		setWorkingAt: (state, action: PayloadAction<string>) => {
 			state.data.workingAt = action.payload
 		},
+		setModeUntil: (state, action: PayloadAction<number>) => {
+			state.data.modeUntil = action.payload
+		}
 	}
 })
 
-export const {setWorkingAt} = configSlice.actions
+export const {setWorkingAt, setModeUntil} = configSlice.actions
 export default configSlice.reducer
 
