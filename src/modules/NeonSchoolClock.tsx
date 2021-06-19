@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../store';
 import {TimetableProps, ModeProps, NeonSchoolClockProps, longTimeBreakMode} from '../states';
 import {defaultTimeTable} from '../states';
-import {setWorkingAt, setModeUntil, setCurrentMode} from "../ducks/configSlice";
+import {setWorkingAt, setModeUntil, setCurrentMode, setNextMode} from "../ducks/configSlice";
 
 
 const dateToString = (date: Date): string => {
@@ -31,7 +31,7 @@ const countToMinuteSecond = (count: number): string => {
 
 export const NeonSchoolClock: React.FC = (props) => {
 	// status from redux
-	const {workingAt, modeUntil, currentMode} = useSelector((state: RootState) => state.config.data)
+	const {workingAt, modeUntil, currentMode, nextMode} = useSelector((state: RootState) => state.config.data)
 
 	const [timetable, setTimetable] = useState<TimetableProps>(defaultTimeTable)
 	const initialMode = timetable.modes[timetable.initial]
@@ -54,7 +54,9 @@ export const NeonSchoolClock: React.FC = (props) => {
 		setCount(count => count - 1)
 		const currentEpoch = Math.floor(date.getTime() / 1000)
 		if (modeUntil <= currentEpoch) {
-			dispatch(setCurrentMode(timetable.modes[currentMode.next]))
+			dispatch(setCurrentMode(nextMode))
+			dispatch(setNextMode(timetable.modes[nextMode.next]))
+
 			if (currentMode.next === timetable.initial) {
 				setLoopCount(loopCount => loopCount + 1)
 			}
@@ -75,6 +77,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 				setTimetable(data.timetable)
 				const mode = data.timetable.modes[data.timetable.initial]
 				dispatch(setCurrentMode(mode))
+				dispatch(setNextMode(data.timetable.modes[mode.next]))
 			}
 		}).catch(err => {
 			console.log(err)
@@ -87,10 +90,11 @@ export const NeonSchoolClock: React.FC = (props) => {
 			console.log(`time to rest ${data}[min]`)
 			// setNextMode(timetable.modes[longTimeBreakMode.next])
 			dispatch(setCurrentMode(longTimeBreakMode))
+			dispatch(setNextMode(currentMode))
 		}).catch(err => {
 			console.log(err)
 		})
-	}, [])
+	}, [currentMode])
 
 	useEffect(() => {
 		window.contextBridge.onChangeWorkingAt().then(data => {

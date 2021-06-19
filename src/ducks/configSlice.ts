@@ -17,10 +17,13 @@ export const configSlice = createSlice({
 		},
 		setCurrentMode: (state, action: PayloadAction<ModeProps>) => {
 			state.data.currentMode = action.payload
+		},
+		setNextMode: (state, action: PayloadAction<ModeProps>) => {
+			state.data.nextMode = action.payload
 		}
 	}
 })
 
-export const {setWorkingAt, setModeUntil, setCurrentMode} = configSlice.actions
+export const {setWorkingAt, setModeUntil, setCurrentMode, setNextMode} = configSlice.actions
 export default configSlice.reducer
 
