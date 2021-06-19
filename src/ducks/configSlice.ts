@@ -5,6 +5,11 @@ const initialState: {data: IApplicationState} = {
 	data: defaultApplicationState,
 }
 
+interface ISetModes {
+	current: ModeProps
+	next: ModeProps
+}
+
 export const configSlice = createSlice({
 	name: 'ne10Config',
 	initialState,
@@ -15,6 +20,10 @@ export const configSlice = createSlice({
 		setModeUntil: (state, action: PayloadAction<number>) => {
 			state.data.modeUntil = action.payload
 		},
+		setModes: (state, action: PayloadAction<ISetModes>) => {
+			state.data.currentMode = action.payload.current
+			state.data.nextMode = action.payload.next
+		},
 		setCurrentMode: (state, action: PayloadAction<ModeProps>) => {
 			state.data.currentMode = action.payload
 		},
@@ -24,6 +33,6 @@ export const configSlice = createSlice({
 	}
 })
 
-export const {setWorkingAt, setModeUntil, setCurrentMode, setNextMode} = configSlice.actions
+export const {setWorkingAt, setModeUntil, setModes, setCurrentMode, setNextMode} = configSlice.actions
 export default configSlice.reducer
 

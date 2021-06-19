@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../store';
 import {TimetableProps, ModeProps, NeonSchoolClockProps, longTimeBreakMode} from '../states';
 import {defaultTimeTable} from '../states';
-import {setWorkingAt, setModeUntil, setCurrentMode, setNextMode} from "../ducks/configSlice";
+import {setWorkingAt, setModeUntil, setModes} from "../ducks/configSlice";
 
 
 const dateToString = (date: Date): string => {
@@ -54,9 +54,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 		setCount(count => count - 1)
 		const currentEpoch = Math.floor(date.getTime() / 1000)
 		if (modeUntil <= currentEpoch) {
-			dispatch(setCurrentMode(nextMode))
-			dispatch(setNextMode(timetable.modes[nextMode.next]))
-
+			dispatch(setModes({current: nextMode, next: timetable.modes[nextMode.next]}))
 			if (currentMode.next === timetable.initial) {
 				setLoopCount(loopCount => loopCount + 1)
 			}
@@ -76,8 +74,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 			if (data.timetable) {
 				setTimetable(data.timetable)
 				const mode = data.timetable.modes[data.timetable.initial]
-				dispatch(setCurrentMode(mode))
-				dispatch(setNextMode(data.timetable.modes[mode.next]))
+				dispatch(setModes({current: mode, next: data.timetable.modes[mode.next]}))
 			}
 		}).catch(err => {
 			console.log(err)
@@ -88,9 +85,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 	useEffect(() => {
 		window.contextBridge.onLongTimeBreak().then(data => {
 			console.log(`time to rest ${data}[min]`)
-			// setNextMode(timetable.modes[longTimeBreakMode.next])
-			dispatch(setCurrentMode(longTimeBreakMode))
-			dispatch(setNextMode(currentMode))
+			dispatch(setModes({current: longTimeBreakMode, next: currentMode}))
 		}).catch(err => {
 			console.log(err)
 		})
