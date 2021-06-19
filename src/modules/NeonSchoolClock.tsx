@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../store';
 import {TimetableProps, ModeProps, NeonSchoolClockProps, longTimeBreakMode} from '../states';
 import {defaultTimeTable} from '../states';
-import {setWorkingAt, setModeUntil} from "../ducks/configSlice";
+import {setWorkingAt, setModeUntil, setCurrentMode} from "../ducks/configSlice";
 
 
 const dateToString = (date: Date): string => {
@@ -31,18 +31,14 @@ const countToMinuteSecond = (count: number): string => {
 
 export const NeonSchoolClock: React.FC = (props) => {
 	// status from redux
-	const {workingAt, modeUntil} = useSelector((state: RootState) => state.config.data)
+	const {workingAt, modeUntil, currentMode} = useSelector((state: RootState) => state.config.data)
 
 	const [timetable, setTimetable] = useState<TimetableProps>(defaultTimeTable)
 	const initialMode = timetable.modes[timetable.initial]
 	// states
 	const [date, setDate] = useState<Date>(new Date())
-	const [mode, setMode] = useState<ModeProps>(initialMode)
-	// const [nextMode, setNextMode] = useState<ModeProps>(timetable.modes[initialMode.next])
 	const [count, setCount] = useState<number>(initialMode.durationMinute * 60)
 	const [loopCount, setLoopCount] = useState<number>(1)
-	// working at
-	// const [workingAt, setWorkingAt] = useState<string>("none")
 	const dispatch = useDispatch()
 
 	// ticks 1[sec]
@@ -58,8 +54,8 @@ export const NeonSchoolClock: React.FC = (props) => {
 		setCount(count => count - 1)
 		const currentEpoch = Math.floor(date.getTime() / 1000)
 		if (modeUntil <= currentEpoch) {
-			setMode(mode => timetable.modes[mode.next])
-			if (mode.next === timetable.initial) {
+			dispatch(setCurrentMode(timetable.modes[currentMode.next]))
+			if (currentMode.next === timetable.initial) {
 				setLoopCount(loopCount => loopCount + 1)
 			}
 		}
@@ -67,10 +63,10 @@ export const NeonSchoolClock: React.FC = (props) => {
 
 	// check loops
 	useEffect(() => {
-		setCount(mode.durationMinute * 60)
-		const untilEpoch = Math.floor((new Date).getTime() / 1000) + mode.durationMinute * 60
+		setCount(currentMode.durationMinute * 60)
+		const untilEpoch = Math.floor((new Date).getTime() / 1000) + currentMode.durationMinute * 60
 		dispatch(setModeUntil(untilEpoch))
-	}, [mode, timetable])
+	}, [currentMode, timetable])
 
 	// load timetable from config once
 	useEffect(() => {
@@ -78,7 +74,7 @@ export const NeonSchoolClock: React.FC = (props) => {
 			if (data.timetable) {
 				setTimetable(data.timetable)
 				const mode = data.timetable.modes[data.timetable.initial]
-				setMode(mode)
+				dispatch(setCurrentMode(mode))
 			}
 		}).catch(err => {
 			console.log(err)
@@ -90,14 +86,13 @@ export const NeonSchoolClock: React.FC = (props) => {
 		window.contextBridge.onLongTimeBreak().then(data => {
 			console.log(`time to rest ${data}[min]`)
 			// setNextMode(timetable.modes[longTimeBreakMode.next])
-			setMode(longTimeBreakMode)
+			dispatch(setCurrentMode(longTimeBreakMode))
 		}).catch(err => {
 			console.log(err)
 		})
 	}, [])
 
 	useEffect(() => {
-
 		window.contextBridge.onChangeWorkingAt().then(data => {
 			console.log(`working at ${data}`)
 			dispatch(setWorkingAt(data))
@@ -109,9 +104,9 @@ export const NeonSchoolClock: React.FC = (props) => {
 	return (
 		<NeonBox
 			header={`Loop: ${loopCount}@${workingAt}`}
-			title={mode.title}
+			title={currentMode.title}
 			subtitle={`${dateToString(date)} JST\n${countToMinuteSecond(count)}`}
-			color={mode.color}
+			color={currentMode.color}
 		/>
 	)
 }
