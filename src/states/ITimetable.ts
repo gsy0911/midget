@@ -10,14 +10,14 @@ export interface TimetableProps {
 	initial: string,
 }
 
-const workMode: ModeProps = {
+export const workMode: ModeProps = {
 	durationMinute: 55,
 	color: "cyan",
 	title: "WORK NOW",
 	next: "break"
 }
 
-const breakMode: ModeProps = {
+export const breakMode: ModeProps = {
 	durationMinute: 5,
 	color: "orange",
 	title: "REST",
