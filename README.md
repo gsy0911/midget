@@ -1,6 +1,6 @@
 # ne10
 
-[![version](https://img.shields.io/badge/version-0.1.2-orange.svg)]()
+[![version](https://img.shields.io/badge/version-0.1.3-orange.svg)]()
 
 ## environment
 

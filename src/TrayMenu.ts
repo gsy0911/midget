@@ -1,4 +1,4 @@
-import {app, BrowserWindow, Tray, Menu, nativeImage} from "electron";
+import {app, BrowserWindow, Tray, Menu, nativeImage, MenuItemConstructorOptions} from "electron";
 import path from "path";
 
 export class TrayMenu {
@@ -10,9 +10,9 @@ export class TrayMenu {
 	// Path where should we fetch our icon;
 	private iconPath = path.join(__dirname + "/assets/icon.png");
 
-	constructor(window: BrowserWindow) {
+	constructor(window: BrowserWindow, workingAt: string[]) {
 		this.tray = new Tray(this.createNativeImage());
-		this.tray.setContextMenu(this.createContextMenu(window));
+		this.tray.setContextMenu(this.createContextMenu(window, workingAt));
 	}
 
 	createNativeImage(): nativeImage {
@@ -25,7 +25,22 @@ export class TrayMenu {
 		return image;
 	}
 
-	createContextMenu(window: BrowserWindow): Menu {
+	createContextMenu(window: BrowserWindow, workingAt: string[]): Menu {
+		const addWorkingAtMenu = (label: string, checked: boolean): MenuItemConstructorOptions => {
+			return {
+				label: label,
+				type: "radio",
+				checked: checked,
+				click: () => window.webContents.send("workingAt", {name: label})
+			}
+		}
+		const workingAtSubmenu = workingAt.map((value, index) => {
+			if (index === 0) {
+				return addWorkingAtMenu(value, true)
+			} else {
+				return addWorkingAtMenu(value, false)
+			}
+		})
 		const contextMenu = Menu.buildFromTemplate([
 			// {
 			// 	label: "work timer",
@@ -37,11 +52,11 @@ export class TrayMenu {
 			// 	type: "radio",
 			// 	// click: () => window.loadURL("/unknown")
 			// },
-			// {type: "separator"},
 			{
 				label: "reset",
 				click: () => window.reload()
 			},
+			{type: "separator"},
 			{
 				label: "break",
 				submenu: [
@@ -50,6 +65,10 @@ export class TrayMenu {
 						click: () => window.webContents.send("longTimeBreak", {minutes: 60})
 					}
 				],
+			},
+			{
+				label: "working at",
+				submenu: workingAtSubmenu,
 			},
 			{
 				label: "Quit",

@@ -1,25 +1,38 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {IConfig} from '../states';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {IApplicationState, defaultApplicationState, ModeProps} from '../states';
 
-
-interface IConfigStore {
-	data: IConfig | undefined
+const initialState: {data: IApplicationState} = {
+	data: defaultApplicationState,
 }
 
-const initialState: IConfigStore = {
-	data: undefined,
+interface ISetModes {
+	current: ModeProps
+	next: ModeProps
 }
 
 export const configSlice = createSlice({
 	name: 'ne10Config',
 	initialState,
 	reducers: {
-		setConfig: (state, action) => {
-			state.data = action.payload
+		setWorkingAt: (state, action: PayloadAction<string>) => {
+			state.data.workingAt = action.payload
 		},
+		setModeUntil: (state, action: PayloadAction<number>) => {
+			state.data.modeUntil = action.payload
+		},
+		setModes: (state, action: PayloadAction<ISetModes>) => {
+			state.data.currentMode = action.payload.current
+			state.data.nextMode = action.payload.next
+		},
+		setCurrentMode: (state, action: PayloadAction<ModeProps>) => {
+			state.data.currentMode = action.payload
+		},
+		setNextMode: (state, action: PayloadAction<ModeProps>) => {
+			state.data.nextMode = action.payload
+		}
 	}
 })
 
-export const {setConfig} = configSlice.actions
+export const {setWorkingAt, setModeUntil, setModes, setCurrentMode, setNextMode} = configSlice.actions
 export default configSlice.reducer
 

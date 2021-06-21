@@ -3,7 +3,7 @@ import {NeonSchoolClock} from './modules'
 import {makeStyles} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
-
+import {useDispatch} from "react-redux";
 
 
 const theme = createMuiTheme({
@@ -49,9 +49,11 @@ const useStyles = makeStyles((theme) => ({
 export const Layout: React.FC = () => {
 
 	const classes = useStyles()
+	const dispatch = useDispatch()
+
 	return (
 		<ThemeProvider theme={theme}>
-			<NeonSchoolClock />
+			<NeonSchoolClock/>
 		</ThemeProvider>
 	);
 }
